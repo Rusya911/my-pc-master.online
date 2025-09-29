@@ -19,15 +19,33 @@
   <meta property="og:url" content="https://my-pc-master.online/reviews.html">
 
   <!-- favicon -->
-  <link rel="icon" type="image/png" href="./images/favicon.png">
+  <link rel="icon" type="image/png" href="images/favicon.png">
 
   <!-- Шрифты и иконки -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 
   <!-- Цвет темы браузера -->
   <meta name="theme-color" content="#111111">
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+     m[i].l=1*new Date();
+     for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+     k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+     (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+     ym(102095983, "init", {
+          clickmap:true,
+          trackLinks:true,
+          accurateTrackBounce:true,
+          webvisor:true
+     });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/102095983" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
 </head>
 
 <body id="top">
@@ -61,21 +79,7 @@
     <h2>Отзывы клиентов</h2>
     
     <div class="reviews-grid">
-      <!-- Примеры отзывов -->
-      <article class="review-card">
-        <div class="review-header">
-          <div class="review-author">Руслан</div>
-          <div class="review-date">15.03.2025</div>
-        </div>
-        <div class="review-rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-        </div>
-        <p class="review-text">Тестовый отзыв и всякое бла-бла-бла</p>
-      </article>
+      <!-- Отзывы будут загружены динамически -->
     </div>
 
     <div class="review-form-container">
@@ -83,43 +87,55 @@
       <form id="reviewForm" class="review-form">
         <div class="form-group">
           <label for="name">Ваше имя</label>
-          <input type="text" id="name" name="name" required minlength="2" placeholder="Введите ваше имя">
+          <input type="text" id="name" name="name" required minlength="2" placeholder="Введите ваше имя" autocomplete="nickname" autocapitalize="words" spellcheck="false" aria-autocomplete="none" data-lpignore="true">
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Номер телефона <span class="privacy-note">(не будет опубликован)</span></label>
+          <div class="phone-input-wrapper">
+            <i class="fas fa-phone"></i>
+            <input type="tel" id="phoneInput" name="phone" placeholder="+7 (___) ___-__-__" required autocomplete="tel" inputmode="tel" pattern="\+7\s?\(?\d{3}\)?\s?\d{3}-?\d{2}-?\d{2}">
+          </div>
         </div>
         
         <div class="form-group">
           <label>Оценка</label>
           <div class="rating-input">
             <input type="radio" id="star5" name="rating" value="5" required>
-            <label for="star5"><i class="fas fa-star"></i></label>
+            <label for="star5" title="Отлично"><i class="fas fa-star"></i></label>
             
             <input type="radio" id="star4" name="rating" value="4">
-            <label for="star4"><i class="fas fa-star"></i></label>
+            <label for="star4" title="Хорошо"><i class="fas fa-star"></i></label>
             
             <input type="radio" id="star3" name="rating" value="3">
-            <label for="star3"><i class="fas fa-star"></i></label>
+            <label for="star3" title="Нормально"><i class="fas fa-star"></i></label>
             
             <input type="radio" id="star2" name="rating" value="2">
-            <label for="star2"><i class="fas fa-star"></i></label>
+            <label for="star2" title="Плохо"><i class="fas fa-star"></i></label>
             
             <input type="radio" id="star1" name="rating" value="1">
-            <label for="star1"><i class="fas fa-star"></i></label>
+            <label for="star1" title="Очень плохо"><i class="fas fa-star"></i></label>
           </div>
         </div>
         
         <div class="form-group">
           <label for="review">Ваш отзыв</label>
-          <textarea id="review" name="review" required minlength="10" placeholder="Напишите ваш отзыв (минимум 10 символов)"></textarea>
+          <textarea id="review" name="review" required minlength="10" placeholder="Напишите ваш отзыв (минимум 10 символов)" rows="4"></textarea>
+          <div class="char-counter"><span id="charCount">0</span>/500</div>
         </div>
         
         <div class="form-group">
           <label for="captcha">Подтвердите, что вы не робот</label>
           <div class="captcha-container">
             <span id="captchaQuestion"></span>
-            <input type="number" id="captcha" name="captcha" required placeholder="Введите ответ">
+            <input type="number" id="captcha" name="captcha" required placeholder="Введите ответ" min="0" max="20">
           </div>
         </div>
         
-        <button type="submit" class="submit-button">Отправить отзыв</button>
+        <button type="submit" class="submit-button">
+          <i class="fas fa-paper-plane"></i>
+          Отправить отзыв
+        </button>
       </form>
     </div>
   </section>
@@ -140,8 +156,11 @@
     </div>
   </footer>
 
-  <script src="./js/script.js"></script>
-  <script src="./js/reviews.js"></script>
-</body>
+  <!-- Сначала загружаем Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Затем наши скрипты -->
+  <script src="js/script.js"></script>
+  <script src="js/reviews.js"></script>
+  </body>
 
 </html> 
